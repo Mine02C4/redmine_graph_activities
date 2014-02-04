@@ -7,8 +7,13 @@ class GraphActivitiesController < ApplicationController
   before_filter :init
 
   def init
-    @project = Project.find(params[:id])
-    @assignables = @project.assignable_users
+    if !params[:id].blank?
+      @project = Project.find(params[:id])
+      @assignables = @project.assignable_users
+    else
+      @project = nil
+      @assignables = User.active
+    end
     retrieve_date_range
   end
 
